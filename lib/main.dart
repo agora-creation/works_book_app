@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:works_book_app/common/style.dart';
+import 'package:works_book_app/screens/sign_in.dart';
 import 'package:works_book_app/screens/splash.dart';
 
 Future main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('ja'),
       title: 'お仕事手帳',
       theme: customTheme(),
-      home: const SplashScreen(),
+      home: const SignInScreen(),
     );
   }
 }

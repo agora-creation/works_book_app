@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/screens/home.dart';
-import 'package:works_book_app/screens/sign_up.dart';
+import 'package:works_book_app/screens/sign_in.dart';
 import 'package:works_book_app/widgets/custom_main_button.dart';
 import 'package:works_book_app/widgets/custom_text_form_field.dart';
 import 'package:works_book_app/widgets/link_text.dart';
 import 'package:works_book_app/widgets/title_logo.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +38,18 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       CustomTextFormField(
                         controller: TextEditingController(),
+                        textInputType: TextInputType.name,
+                        maxLines: 1,
+                        label: 'お名前',
+                        color: kBaseColor,
+                        prefix: Icons.person,
+                      ),
+                      const SizedBox(height: 8),
+                      CustomTextFormField(
+                        controller: TextEditingController(),
                         textInputType: TextInputType.emailAddress,
                         maxLines: 1,
-                        label: '登録したメールアドレス',
+                        label: 'メールアドレス',
                         color: kBaseColor,
                         prefix: Icons.mail,
                       ),
@@ -50,13 +59,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         obscureText: true,
                         textInputType: TextInputType.visiblePassword,
                         maxLines: 1,
-                        label: '登録したパスワード',
+                        label: 'パスワード',
                         color: kBaseColor,
                         prefix: Icons.password,
                       ),
                       const SizedBox(height: 8),
                       CustomMainButton(
-                        label: 'ログイン',
+                        label: '新規登録',
                         labelColor: kWhiteColor,
                         backgroundColor: kBaseColor,
                         onPressed: () {
@@ -65,13 +74,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       const SizedBox(height: 8),
                       Align(
-                        alignment: Alignment.bottomRight,
+                        alignment: Alignment.bottomLeft,
                         child: LinkText(
-                          label: 'アカウント登録',
+                          label: 'ログイン',
                           labelColor: kBaseColor,
                           onTap: () => pushScreen(
                             context,
-                            const SignUpScreen(),
+                            const SignInScreen(),
                           ),
                         ),
                       ),
