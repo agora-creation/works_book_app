@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/screens/chat.dart';
 import 'package:works_book_app/screens/memo.dart';
 import 'package:works_book_app/screens/record.dart';
 import 'package:works_book_app/screens/schedule.dart';
+import 'package:works_book_app/screens/settings.dart';
 import 'package:works_book_app/screens/todo.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -71,10 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('アゴラ・クリエーション'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => showBottomUpScreen(
+              context,
+              const SettingsScreen(),
+            ),
             icon: const Icon(Icons.more_vert),
           ),
         ],
