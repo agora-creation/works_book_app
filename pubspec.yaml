@@ -22,6 +22,9 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   persistent_bottom_nav_bar_v2: ^4.2.8
   syncfusion_flutter_calendar: ^22.2.8
+  firebase_core: ^2.14.0
+  firebase_auth: ^4.6.3
+  cloud_firestore: ^4.8.1
 
 dependency_overrides:
   modal_bottom_sheet: ^3.0.0-pre

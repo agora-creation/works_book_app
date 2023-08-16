@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
+import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/home.dart';
 import 'package:works_book_app/screens/sign_up.dart';
 import 'package:works_book_app/widgets/custom_main_button.dart';
@@ -18,6 +20,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -37,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Column(
                     children: [
                       CustomTextFormField(
-                        controller: TextEditingController(),
+                        controller: userProvider.emailController,
                         textInputType: TextInputType.emailAddress,
                         maxLines: 1,
                         label: '登録したメールアドレス',
@@ -46,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       const SizedBox(height: 8),
                       CustomTextFormField(
-                        controller: TextEditingController(),
+                        controller: userProvider.passwordController,
                         obscureText: true,
                         textInputType: TextInputType.visiblePassword,
                         maxLines: 1,
@@ -59,7 +63,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         label: 'ログイン',
                         labelColor: kWhiteColor,
                         backgroundColor: kBaseColor,
-                        onPressed: () {
+                        onPressed: () async {
+                          String? error = await userProvider.signIn();
+                          if (error != null) {
+                            return;
+                          }
+                          userProvider.clearController();
+                          if (!mounted) return;
                           pushReplacementScreen(context, const HomeScreen());
                         },
                       ),
