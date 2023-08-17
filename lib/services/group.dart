@@ -12,7 +12,9 @@ class GroupService {
         .where('loginId', isEqualTo: loginId ?? 'error')
         .get()
         .then((value) {
-      ret = GroupModel.fromSnapshot(value.docs.first);
+      if (value.docs.isNotEmpty) {
+        ret = GroupModel.fromSnapshot(value.docs.first);
+      }
     });
     return ret;
   }

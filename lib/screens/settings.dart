@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:works_book_app/common/style.dart';
+import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/widgets/link_text.dart';
 import 'package:works_book_app/widgets/settings_list_tile.dart';
 import 'package:works_book_app/widgets/title_logo.dart';
@@ -14,6 +16,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -48,6 +52,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () {},
             ),
             SettingsListTile(
+              iconData: Icons.email,
+              label: 'メールアドレス変更',
+              onTap: () {},
+            ),
+            SettingsListTile(
               iconData: Icons.password,
               label: 'パスワード変更',
               onTap: () {},
@@ -57,11 +66,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: '通知設定',
               onTap: () {},
             ),
-            SettingsListTile(
-              iconData: Icons.groups,
-              label: '会社・組織情報',
-              onTap: () {},
-            ),
+            userProvider.group != null
+                ? SettingsListTile(
+                    iconData: Icons.groups,
+                    label: '会社・組織情報',
+                    onTap: () {},
+                  )
+                : Container(),
             const SizedBox(height: 24),
             LinkText(
               label: 'ログアウト',

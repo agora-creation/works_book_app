@@ -5,12 +5,15 @@ import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/chat.dart';
+import 'package:works_book_app/screens/group_in.dart';
 import 'package:works_book_app/screens/memo.dart';
 import 'package:works_book_app/screens/record.dart';
 import 'package:works_book_app/screens/schedule.dart';
 import 'package:works_book_app/screens/settings.dart';
 import 'package:works_book_app/screens/todo.dart';
 import 'package:works_book_app/widgets/custom_main_button.dart';
+import 'package:works_book_app/widgets/custom_persistent_tab_view.dart';
+import 'package:works_book_app/widgets/group_not_message.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -93,49 +96,30 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: userProvider.group != null
-          ? PersistentTabView(
-              context,
+          ? CustomPersistentTabView(
+              context: context,
               controller: controller,
               screens: buildScreens(),
               items: navBarsItems(),
-              decoration: const NavBarDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: kGrey2Color,
-                    blurRadius: 8,
+            )
+          : Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const GroupNotMessage(),
+                  CustomMainButton(
+                    label: '会社・組織に所属する',
+                    labelColor: kWhiteColor,
+                    backgroundColor: kBaseColor,
+                    onPressed: () => showBottomUpScreen(
+                      context,
+                      const GroupInScreen(),
+                    ),
                   ),
                 ],
               ),
-              backgroundColor: kWhiteColor,
-              itemAnimationProperties: const ItemAnimationProperties(
-                duration: Duration(milliseconds: 200),
-                curve: Curves.ease,
-              ),
-              screenTransitionAnimation: const ScreenTransitionAnimation(
-                animateTabTransition: true,
-                curve: Curves.ease,
-                duration: Duration(milliseconds: 200),
-              ),
-              navBarStyle: NavBarStyle.style3,
-            )
-          : Column(
-              children: [
-                const Text(
-                  '会社・組織に所属していません',
-                  style: TextStyle(fontSize: 18),
-                ),
-                const Text(
-                  'このアカウントは、会社・組織に所属していません。以下のボタンをタップして、所属を行ってください。',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 16),
-                CustomMainButton(
-                  label: '会社・組織に所属する',
-                  labelColor: kWhiteColor,
-                  backgroundColor: kBaseColor,
-                  onPressed: () {},
-                ),
-              ],
             ),
     );
   }
