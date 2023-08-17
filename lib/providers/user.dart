@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/user.dart';
+import 'package:works_book_app/services/group.dart';
 import 'package:works_book_app/services/user.dart';
 
 enum AuthStatus {
@@ -17,8 +19,11 @@ class UserProvider with ChangeNotifier {
   User? _authUser;
   User? get authUser => _authUser;
   UserService userService = UserService();
+  GroupService groupService = GroupService();
   UserModel? _user;
   UserModel? get user => _user;
+  GroupModel? _group;
+  GroupModel? get group => _group;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -99,6 +104,7 @@ class UserProvider with ChangeNotifier {
       _authUser = authUser;
       _status = AuthStatus.authenticated;
       _user = await userService.select(_authUser?.uid);
+      _group = await groupService.select(_user?.groupId);
     }
     notifyListeners();
   }
