@@ -5,11 +5,11 @@ class GroupService {
   String collection = 'group';
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<GroupModel?> select(String? loginId) async {
+  Future<GroupModel?> select(String? number) async {
     GroupModel? ret;
     await firestore
         .collection(collection)
-        .where('loginId', isEqualTo: loginId ?? 'error')
+        .where('number', isEqualTo: number ?? 'error')
         .get()
         .then((value) {
       if (value.docs.isNotEmpty) {

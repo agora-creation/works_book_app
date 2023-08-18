@@ -44,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             SettingsListTile(
               iconData: Icons.person,
               label: 'お名前変更',

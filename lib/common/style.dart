@@ -50,3 +50,8 @@ ThemeData customTheme() {
     unselectedWidgetColor: kGreyColor,
   );
 }
+
+const kErrorStyle = TextStyle(
+  color: kRedColor,
+  fontSize: 14,
+);

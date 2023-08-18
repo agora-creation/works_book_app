@@ -19,6 +19,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  String? errorText;
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -28,10 +30,11 @@ class _SignInScreenState extends State<SignInScreen> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: ListView(
             children: [
+              const SizedBox(height: 40),
               const TitleLogo(),
+              const SizedBox(height: 80),
               CustomCard(
                 children: [
                   CustomTextFormField(
@@ -53,6 +56,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     prefix: Icons.password,
                   ),
                   const SizedBox(height: 8),
+                  errorText != null
+                      ? Text('$errorText', style: kErrorStyle)
+                      : Container(),
                   CustomMainButton(
                     label: 'ログイン',
                     labelColor: kWhiteColor,
@@ -60,6 +66,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () async {
                       String? error = await userProvider.signIn();
                       if (error != null) {
+                        setState(() {
+                          errorText = error;
+                        });
                         return;
                       }
                       userProvider.clearController();

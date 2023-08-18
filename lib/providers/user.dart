@@ -74,10 +74,10 @@ class UserProvider with ChangeNotifier {
       _authUser = result?.user;
       userService.create({
         'id': _authUser?.uid,
-        'groupId': '',
         'name': nameController.text,
         'email': emailController.text,
         'password': passwordController.text,
+        'groupNumber': '',
         'token': '',
         'createdAt': DateTime.now(),
       });
@@ -104,7 +104,7 @@ class UserProvider with ChangeNotifier {
       _authUser = authUser;
       _status = AuthStatus.authenticated;
       _user = await userService.select(_authUser?.uid);
-      _group = await groupService.select(_user?.groupId);
+      _group = await groupService.select(_user?.groupNumber);
     }
     notifyListeners();
   }

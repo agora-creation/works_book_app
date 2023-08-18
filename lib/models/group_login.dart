@@ -1,30 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserModel {
+class GroupLoginModel {
   String _id = '';
-  String _name = '';
-  String _email = '';
-  String _password = '';
   String _groupNumber = '';
-  String _token = '';
+  String _groupName = '';
+  String _userName = '';
+  bool _accept = false;
   DateTime _createdAt = DateTime.now();
 
   String get id => _id;
-  String get name => _name;
-  String get email => _email;
-  String get password => _password;
   String get groupNumber => _groupNumber;
-  String get token => _token;
+  String get groupName => _groupName;
+  String get userName => _userName;
+  bool get accept => _accept;
   DateTime get createdAt => _createdAt;
 
-  UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  GroupLoginModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     Map<String, dynamic> map = snapshot.data() ?? {};
     _id = map['id'] ?? '';
-    _name = map['name'] ?? '';
-    _email = map['email'] ?? '';
-    _password = map['password'] ?? '';
     _groupNumber = map['groupNumber'] ?? '';
-    _token = map['token'] ?? '';
+    _groupName = map['groupName'] ?? '';
+    _userName = map['userName'] ?? '';
+    _accept = map['accept'] ?? false;
     if (map['createdAt'] != null) {
       _createdAt = map['createdAt'].toDate() ?? DateTime.now();
     }
