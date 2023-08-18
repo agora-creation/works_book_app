@@ -61,7 +61,8 @@ class _GroupInScreenState extends State<GroupInScreen> {
             group == null
                 ? Container()
                 : GroupList(
-                    group: group,
+                    headline: '会社・組織番号',
+                    value: group?.name ?? '',
                     onPressed: () {
                       setState(() {
                         group = null;

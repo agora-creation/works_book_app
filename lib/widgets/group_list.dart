@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:works_book_app/common/style.dart';
-import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/widgets/custom_sub_button.dart';
 
 class GroupList extends StatelessWidget {
-  final GroupModel? group;
+  final String headline;
+  final String value;
   final Function()? onPressed;
 
   const GroupList({
-    required this.group,
+    required this.headline,
+    required this.value,
     this.onPressed,
     super.key,
   });
@@ -18,42 +19,41 @@ class GroupList extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(color: kGrey2Color),
-          bottom: BorderSide(color: kGrey2Color),
-        ),
+        border: Border(bottom: BorderSide(color: kGrey2Color)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '会社・組織名',
-                  style: TextStyle(
+                  headline,
+                  style: const TextStyle(
                     color: kGrey2Color,
                     fontSize: 12,
                   ),
                 ),
                 Text(
-                  'アゴラ・クリエーション',
-                  style: TextStyle(
-                    color: kBaseColor,
+                  value,
+                  style: const TextStyle(
+                    color: kBlackColor,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            CustomSubButton(
-              label: 'キャンセル',
-              labelColor: kWhiteColor,
-              backgroundColor: kGreyColor,
-              onPressed: onPressed,
-            ),
+            onPressed != null
+                ? CustomSubButton(
+                    label: 'キャンセル',
+                    labelColor: kWhiteColor,
+                    backgroundColor: kGreyColor,
+                    onPressed: onPressed,
+                  )
+                : Container(),
           ],
         ),
       ),

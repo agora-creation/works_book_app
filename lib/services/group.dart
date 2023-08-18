@@ -18,4 +18,11 @@ class GroupService {
     });
     return ret;
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamList(String? number) {
+    return firestore
+        .collection(collection)
+        .where('number', isEqualTo: number ?? 'error')
+        .snapshots();
+  }
 }

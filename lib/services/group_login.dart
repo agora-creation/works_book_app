@@ -8,10 +8,14 @@ class GroupLoginService {
     firestore.collection(collection).doc(values['id']).set(values);
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> streamList(String? id) {
-    return FirebaseFirestore.instance
+  void delete(Map<String, dynamic> values) {
+    firestore.collection(collection).doc(values['id']).delete();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamList(String? id) {
+    return firestore
         .collection(collection)
-        .doc(id ?? 'error')
+        .where('id', isEqualTo: id ?? 'error')
         .snapshots();
   }
 }
