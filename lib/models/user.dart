@@ -6,6 +6,8 @@ class UserModel {
   String _email = '';
   String _password = '';
   String _groupNumber = '';
+  String _recordId = '';
+  String _recordRestId = '';
   String _token = '';
   DateTime _createdAt = DateTime.now();
 
@@ -14,6 +16,8 @@ class UserModel {
   String get email => _email;
   String get password => _password;
   String get groupNumber => _groupNumber;
+  String get recordId => _recordId;
+  String get recordRestId => _recordRestId;
   String get token => _token;
   DateTime get createdAt => _createdAt;
 
@@ -24,6 +28,8 @@ class UserModel {
     _email = map['email'] ?? '';
     _password = map['password'] ?? '';
     _groupNumber = map['groupNumber'] ?? '';
+    _recordId = map['recordId'] ?? '';
+    _recordRestId = map['recordRestId'] ?? '';
     _token = map['token'] ?? '';
     if (map['createdAt'] != null) {
       _createdAt = map['createdAt'].toDate() ?? DateTime.now();

@@ -24,6 +24,7 @@ class TodoService {
     return firestore
         .collection(collection)
         .where('groupNumber', isEqualTo: groupNumber ?? 'error')
+        .orderBy('createdAt', descending: true)
         .snapshots();
   }
 }

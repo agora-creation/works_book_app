@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:works_book_app/common/date_machine_util.dart';
 
 void pushScreen(BuildContext context, Widget widget) {
   Navigator.push(
@@ -104,6 +106,16 @@ String rndText(int length) {
   return String.fromCharCodes(codeUnits);
 }
 
+Timestamp convertTimestamp(DateTime date, bool end) {
+  String dateTime = '${dateText('yyyy-MM-dd', date)} 00:00:00.000';
+  if (end == true) {
+    dateTime = '${dateText('yyyy-MM-dd', date)} 23:59:59.999';
+  }
+  return Timestamp.fromMillisecondsSinceEpoch(
+    DateTime.parse(dateTime).millisecondsSinceEpoch,
+  );
+}
+
 String twoDigits(int n) => n.toString().padLeft(2, '0');
 
 String addTime(String left, String right) {
@@ -133,4 +145,15 @@ String subTime(String left, String right) {
   double h = diffM / 60;
   int m = diffM % 60;
   return '${twoDigits(h.toInt())}:${twoDigits(m)}';
+}
+
+List<DateTime> generateDays(DateTime month) {
+  List<DateTime> ret = [];
+  var dateMap = DateMachineUtil.getMonthDate(month, 0);
+  DateTime startTime = DateTime.parse('${dateMap['start']}');
+  DateTime endTime = DateTime.parse('${dateMap['end']}');
+  for (int i = 0; i <= endTime.difference(startTime).inDays; i++) {
+    ret.add(startTime.add(Duration(days: i)));
+  }
+  return ret;
 }

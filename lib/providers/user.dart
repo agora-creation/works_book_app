@@ -75,6 +75,8 @@ class UserProvider with ChangeNotifier {
         'email': emailController.text,
         'password': passwordController.text,
         'groupNumber': '',
+        'recordId': '',
+        'recordRestId': '',
         'token': '',
         'createdAt': DateTime.now(),
       });
@@ -123,6 +125,32 @@ class UserProvider with ChangeNotifier {
       userService.update({
         'id': _authUser?.uid,
         'password': passwordController.text,
+      });
+    } catch (e) {
+      error = e.toString();
+    }
+    return error;
+  }
+
+  Future<String?> updateRecordId(String recordId) async {
+    String? error;
+    try {
+      userService.update({
+        'id': _authUser?.uid,
+        'recordId': recordId,
+      });
+    } catch (e) {
+      error = e.toString();
+    }
+    return error;
+  }
+
+  Future<String?> updateRecordRestId(String recordRestId) async {
+    String? error;
+    try {
+      userService.update({
+        'id': _authUser?.uid,
+        'recordRestId': recordRestId,
       });
     } catch (e) {
       error = e.toString();
