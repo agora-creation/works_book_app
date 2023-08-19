@@ -86,6 +86,50 @@ class UserProvider with ChangeNotifier {
     return error;
   }
 
+  Future<String?> updateUserName() async {
+    String? error;
+    if (nameController.text == '') error = 'お名前を入力してください';
+    try {
+      userService.update({
+        'id': _authUser?.uid,
+        'name': nameController.text,
+      });
+    } catch (e) {
+      error = e.toString();
+    }
+    return error;
+  }
+
+  Future<String?> updateUserEmail() async {
+    String? error;
+    if (emailController.text == '') error = 'メールアドレスを入力してください';
+    try {
+      await auth?.currentUser?.updateEmail(emailController.text);
+      userService.update({
+        'id': _authUser?.uid,
+        'email': emailController.text,
+      });
+    } catch (e) {
+      error = e.toString();
+    }
+    return error;
+  }
+
+  Future<String?> updateUserPassword() async {
+    String? error;
+    if (passwordController.text == '') error = 'パスワードを入力してください';
+    try {
+      await auth?.currentUser?.updatePassword(passwordController.text);
+      userService.update({
+        'id': _authUser?.uid,
+        'password': passwordController.text,
+      });
+    } catch (e) {
+      error = e.toString();
+    }
+    return error;
+  }
+
   Future signOut() async {
     await auth?.signOut();
     _status = AuthStatus.unauthenticated;
@@ -94,7 +138,7 @@ class UserProvider with ChangeNotifier {
     return Future.delayed(Duration.zero);
   }
 
-  Future setupGroup() async {
+  Future reloadUser() async {
     _user = await userService.select(_authUser?.uid);
     notifyListeners();
   }

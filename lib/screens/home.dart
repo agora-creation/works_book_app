@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
               bodyWidget = HomeWidget3(
                 groupLogin: groupLogin,
                 onPressed: () async {
-                  await userProvider.setupGroup();
+                  await userProvider.reloadUser();
                 },
               );
             }

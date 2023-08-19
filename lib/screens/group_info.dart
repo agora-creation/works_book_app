@@ -32,49 +32,45 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
         centerTitle: true,
         title: const Text('会社・組織情報'),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            GroupList(
-              headline: '会社・組織番号',
-              value: widget.group?.number ?? '',
-            ),
-            GroupList(
-              headline: '会社・組織名',
-              value: widget.group?.name ?? '',
-            ),
-            GroupList(
-              headline: '郵便番号',
-              value: widget.group?.zipCode ?? '',
-            ),
-            GroupList(
-              headline: '住所',
-              value: widget.group?.address ?? '',
-            ),
-            GroupList(
-              headline: '電話番号',
-              value: widget.group?.tel ?? '',
-            ),
-            GroupList(
-              headline: 'メールアドレス',
-              value: widget.group?.email ?? '',
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: CustomMainButton(
-                label: 'この会社・組織から脱退する',
-                labelColor: kWhiteColor,
-                backgroundColor: kRedColor,
-                onPressed: () async {
-                  await userProvider.clearGroup();
-                  if (!mounted) return;
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        ),
+        children: [
+          GroupList(
+            headline: '会社・組織番号',
+            value: widget.group?.number ?? '',
+          ),
+          GroupList(
+            headline: '会社・組織名',
+            value: widget.group?.name ?? '',
+          ),
+          GroupList(
+            headline: '郵便番号',
+            value: widget.group?.zipCode ?? '',
+          ),
+          GroupList(
+            headline: '住所',
+            value: widget.group?.address ?? '',
+          ),
+          GroupList(
+            headline: '電話番号',
+            value: widget.group?.tel ?? '',
+          ),
+          GroupList(
+            headline: 'メールアドレス',
+            value: widget.group?.email ?? '',
+          ),
+          const SizedBox(height: 8),
+          CustomMainButton(
+            label: 'この会社・組織から脱退する',
+            labelColor: kWhiteColor,
+            backgroundColor: kRedColor,
+            onPressed: () async {
+              await userProvider.clearGroup();
+              if (!mounted) return;
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
     );
   }

@@ -6,6 +6,9 @@ import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/group_info.dart';
 import 'package:works_book_app/screens/sign_in.dart';
+import 'package:works_book_app/screens/user_email.dart';
+import 'package:works_book_app/screens/user_name.dart';
+import 'package:works_book_app/screens/user_password.dart';
 import 'package:works_book_app/widgets/link_text.dart';
 import 'package:works_book_app/widgets/settings_list_tile.dart';
 import 'package:works_book_app/widgets/title_logo.dart';
@@ -58,17 +61,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               iconData: Icons.person,
               label: 'お名前変更',
               topBorder: true,
-              onTap: () {},
+              onTap: () => pushScreen(
+                context,
+                UserNameScreen(userProvider: userProvider),
+              ),
             ),
             SettingsListTile(
               iconData: Icons.email,
               label: 'メールアドレス変更',
-              onTap: () {},
+              onTap: () => pushScreen(
+                context,
+                UserEmailScreen(userProvider: userProvider),
+              ),
             ),
             SettingsListTile(
               iconData: Icons.password,
               label: 'パスワード変更',
-              onTap: () {},
+              onTap: () => pushScreen(
+                context,
+                UserPasswordScreen(userProvider: userProvider),
+              ),
             ),
             SettingsListTile(
               iconData: Icons.notifications,
