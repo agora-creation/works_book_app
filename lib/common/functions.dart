@@ -103,3 +103,34 @@ String rndText(int length) {
   );
   return String.fromCharCodes(codeUnits);
 }
+
+String twoDigits(int n) => n.toString().padLeft(2, '0');
+
+String addTime(String left, String right) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  List<String> lefts = left.split(':');
+  List<String> rights = right.split(':');
+  double hm = (int.parse(lefts.last) + int.parse(rights.last)) / 60;
+  int m = (int.parse(lefts.last) + int.parse(rights.last)) % 60;
+  int h = (int.parse(lefts.first) + int.parse(rights.first)) + hm.toInt();
+  if (h.toString().length == 1) {
+    return '${twoDigits(h)}:${twoDigits(m)}';
+  } else {
+    return '$h:${twoDigits(m)}';
+  }
+}
+
+String subTime(String left, String right) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  List<String> lefts = left.split(':');
+  List<String> rights = right.split(':');
+  // 時 → 分
+  int leftM = (int.parse(lefts.first) * 60) + int.parse(lefts.last);
+  int rightM = (int.parse(rights.first) * 60) + int.parse(rights.last);
+  // 分で引き算
+  int diffM = leftM - rightM;
+  // 分 → 時
+  double h = diffM / 60;
+  int m = diffM % 60;
+  return '${twoDigits(h.toInt())}:${twoDigits(m)}';
+}

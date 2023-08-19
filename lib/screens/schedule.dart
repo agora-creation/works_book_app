@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:works_book_app/common/style.dart';
+import 'package:works_book_app/models/group.dart';
 
 class ScheduleScreen extends StatefulWidget {
-  const ScheduleScreen({super.key});
+  final GroupModel group;
+
+  const ScheduleScreen({
+    required this.group,
+    super.key,
+  });
 
   @override
   State<ScheduleScreen> createState() => _ScheduleScreenState();

@@ -72,12 +72,12 @@ class _HomeScreenState extends State<HomeScreen> {
           bodyWidget = CustomPersistentTabView(
             context: context,
             controller: controller,
-            screens: const [
-              ScheduleScreen(),
-              TodoScreen(),
-              RecordScreen(),
-              ChatScreen(),
-              MemoScreen(),
+            screens: [
+              ScheduleScreen(group: group),
+              TodoScreen(group: group),
+              RecordScreen(group: group),
+              ChatScreen(group: group),
+              const MemoScreen(),
             ],
             items: [
               PersistentBottomNavBarItem(

@@ -7,6 +7,7 @@ const kWhiteColor = Color(0xFFFFFFFF);
 const kBlackColor = Color(0xFF333333);
 const kGreyColor = Color(0xFF9E9E9E);
 const kGrey2Color = Color(0xFF757575);
+const kGrey3Color = Color(0xFFCCCCCC);
 const kRedColor = Color(0xFFF44336);
 const kBlueColor = Color(0xFF2196F3);
 
