@@ -43,7 +43,7 @@ class RecordService {
     Timestamp endAt = convertTimestamp(monthEnd, true);
     return FirebaseFirestore.instance
         .collection(collection)
-        .where('groupNumber', isEqualTo: groupNumber ?? 'error')
+        .where('groupNumber', isEqualTo: groupNumber)
         .where('userId', isEqualTo: userId ?? 'error')
         .orderBy('startedAt', descending: false)
         .startAt([startAt]).endAt([endAt]).snapshots();

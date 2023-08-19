@@ -6,14 +6,16 @@ class RecordModel {
   String _id = '';
   String _groupNumber = '';
   String _userId = '';
-  DateTime startedAt = DateTime.now();
-  DateTime endedAt = DateTime.now();
+  DateTime _startedAt = DateTime.now();
+  DateTime _endedAt = DateTime.now();
   List<RecordRestModel> recordRests = [];
   DateTime _createdAt = DateTime.now();
 
   String get id => _id;
   String get groupNumber => _groupNumber;
   String get userId => _userId;
+  DateTime get startedAt => _startedAt;
+  DateTime get endedAt => _endedAt;
   DateTime get createdAt => _createdAt;
 
   RecordModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
@@ -21,6 +23,12 @@ class RecordModel {
     _id = map['id'] ?? '';
     _groupNumber = map['groupNumber'] ?? '';
     _userId = map['userId'] ?? '';
+    if (map['startedAt'] != null) {
+      _startedAt = map['startedAt'].toDate() ?? DateTime.now();
+    }
+    if (map['endedAt'] != null) {
+      _endedAt = map['endedAt'].toDate() ?? DateTime.now();
+    }
     recordRests = _convertRecordRests(map['recordRests']);
     if (map['createdAt'] != null) {
       _createdAt = map['createdAt'].toDate() ?? DateTime.now();
@@ -36,11 +44,11 @@ class RecordModel {
   }
 
   String startTime() {
-    return dateText('HH:mm', startedAt);
+    return dateText('HH:mm', _startedAt);
   }
 
   String endTime() {
-    return dateText('HH:mm', endedAt);
+    return dateText('HH:mm', _endedAt);
   }
 
   String restTimes() {
@@ -55,10 +63,10 @@ class RecordModel {
 
   String recordTime() {
     String ret = '00:00';
-    String startedDate = dateText('yyyy-MM-dd', startedAt);
+    String startedDate = dateText('yyyy-MM-dd', _startedAt);
     String startedTime = '${startTime()}:00.000';
     DateTime startedDateTime = DateTime.parse('$startedDate $startedTime');
-    String endedDate = dateText('yyyy-MM-dd', endedAt);
+    String endedDate = dateText('yyyy-MM-dd', _endedAt);
     String endedTime = '${endTime()}:00.000';
     DateTime endedDateTime = DateTime.parse('$endedDate $endedTime');
     //出勤時間と退勤時間の差を求める

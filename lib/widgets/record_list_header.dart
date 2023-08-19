@@ -14,19 +14,42 @@ class RecordListHeader extends StatelessWidget {
       child: const Padding(
         padding: EdgeInsets.all(16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '日付',
-              style: TextStyle(color: kBlackColor),
+              style: TextStyle(
+                color: kBlackColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Text(
-              '出勤〜退勤',
-              style: TextStyle(color: kBlackColor),
-            ),
-            Text(
-              '勤務時間',
-              style: TextStyle(color: kBlackColor),
+            SizedBox(width: 28),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '出勤時間',
+                    style: TextStyle(
+                      color: kBlackColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '退勤時間',
+                    style: TextStyle(
+                      color: kBlackColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '勤務時間',
+                    style: TextStyle(
+                      color: kBlackColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -49,8 +49,37 @@ class RecordList extends StatelessWidget {
               dateText('dd(E)', day),
               style: const TextStyle(color: kBlackColor),
             ),
-            Column(children: startEndTexts),
-            Column(children: recordTexts),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                children: dayInRecords.map((record) {
+                  String startTimeText = record.startTime();
+                  String endTimeText = '';
+                  String recordTimeText = '';
+                  if (record.startedAt != record.endedAt) {
+                    endTimeText = record.endTime();
+                    recordTimeText = record.recordTime();
+                  }
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        startTimeText,
+                        style: const TextStyle(color: kBlackColor),
+                      ),
+                      Text(
+                        endTimeText,
+                        style: const TextStyle(color: kBlackColor),
+                      ),
+                      Text(
+                        recordTimeText,
+                        style: const TextStyle(color: kBlackColor),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
           ],
         ),
       ),
