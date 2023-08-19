@@ -48,7 +48,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
             color: kBaseColor,
             prefix: Icons.person,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           errorText != null
               ? Text('$errorText', style: kErrorStyle)
               : Container(),

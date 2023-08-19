@@ -59,7 +59,7 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
             headline: 'メールアドレス',
             value: widget.group?.email ?? '',
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           CustomMainButton(
             label: 'この会社・組織から脱退する',
             labelColor: kWhiteColor,

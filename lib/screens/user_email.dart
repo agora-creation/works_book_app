@@ -48,7 +48,7 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
             color: kBaseColor,
             prefix: Icons.mail,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           errorText != null
               ? Text('$errorText', style: kErrorStyle)
               : Container(),

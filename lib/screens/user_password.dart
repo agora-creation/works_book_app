@@ -49,7 +49,7 @@ class _UserPasswordScreenState extends State<UserPasswordScreen> {
             color: kBaseColor,
             prefix: Icons.password,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           errorText != null
               ? Text('$errorText', style: kErrorStyle)
               : Container(),
