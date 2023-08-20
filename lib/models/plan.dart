@@ -33,4 +33,14 @@ class PlanModel {
       _createdAt = map['createdAt'].toDate() ?? DateTime.now();
     }
   }
+
+  PlanModel.fromMap(Map data) {
+    _id = data['id'] ?? '';
+    _groupNumber = data['groupNumber'] ?? '';
+    _name = data['name'] ?? '';
+    _startedAt = data['startedAt'] ?? DateTime.now();
+    _endedAt = data['endedAt'] ?? DateTime.now();
+    _allDay = data['allDay'] ?? false;
+    _createdAt = data['createdAt'] ?? DateTime.now();
+  }
 }
