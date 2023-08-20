@@ -23,8 +23,10 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^4.2.8
   multiple_stream_builder: ^3.0.2
   syncfusion_flutter_calendar: ^22.2.8
+  syncfusion_localizations: ^22.2.9
   month_picker_dialog: ^2.0.2
   common_utils: ^2.1.0
+  flutter_launcher_icons: ^0.13.1
   firebase_core: ^2.14.0
   firebase_auth: ^4.6.3
   cloud_firestore: ^4.8.1
@@ -42,6 +44,9 @@ flutter:
 
   uses-material-design: true
 
+  assets:
+    - assets/images/
+
   fonts:
     - family: SourceHanSansJP-Bold
       fonts:
@@ -49,3 +54,8 @@ flutter:
     - family: SourceHanSansJP-Regular
       fonts:
         - asset: assets/fonts/SourceHanSansJP-Regular.otf
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/icon.png'

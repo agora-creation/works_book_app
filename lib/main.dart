@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/home.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
+          SfGlobalLocalizations.delegate,
         ],
         supportedLocales: const [Locale('ja')],
         locale: const Locale('ja'),

@@ -31,7 +31,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: SfCalendar(
-              view: CalendarView.month,
+              view: CalendarView.week,
             ),
           ),
         ),

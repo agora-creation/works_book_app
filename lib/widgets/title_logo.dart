@@ -6,14 +6,13 @@ class TitleLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Icon(
-          Icons.menu_book,
-          color: kBaseColor,
-          size: 40,
+        Image.asset(
+          'assets/images/logo.png',
+          width: 100,
         ),
-        Text(
+        const Text(
           'お仕事手帳',
           style: TextStyle(
             color: kBaseColor,
@@ -22,7 +21,7 @@ class TitleLogo extends StatelessWidget {
             letterSpacing: 4,
           ),
         ),
-        Text(
+        const Text(
           'WORKS BOOK',
           style: TextStyle(
             color: kGreyColor,
