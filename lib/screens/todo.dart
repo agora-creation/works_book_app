@@ -46,9 +46,9 @@ class _TodoScreenState extends State<TodoScreen> {
               }
               return ListView.builder(
                 padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  bottom: 32,
+                  left: 8,
+                  right: 8,
+                  bottom: 40,
                 ),
                 itemCount: todos.length,
                 itemBuilder: (context, index) {
@@ -71,6 +71,7 @@ class _TodoScreenState extends State<TodoScreen> {
             },
           ),
           BottomRightButton(
+            heroTag: 'addTodo',
             iconData: Icons.add,
             onPressed: () => showDialog(
               context: context,

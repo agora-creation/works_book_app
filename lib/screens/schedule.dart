@@ -22,8 +22,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       color: kBackColor,
       child: Padding(
         padding: const EdgeInsets.only(
-          left: 16,
-          right: 16,
+          left: 8,
+          right: 8,
           bottom: 16,
         ),
         child: Card(

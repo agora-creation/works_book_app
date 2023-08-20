@@ -57,9 +57,9 @@ class _RecordScreenState extends State<RecordScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              bottom: 48,
+              left: 8,
+              right: 8,
+              bottom: 40,
             ),
             child: Card(
               elevation: 8,
@@ -119,6 +119,7 @@ class _RecordScreenState extends State<RecordScreen> {
             ),
           ),
           BottomRightButton(
+            heroTag: 'addRecord',
             iconData: Icons.more_time,
             onPressed: () => showDialog(
               context: context,

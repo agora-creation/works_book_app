@@ -20,12 +20,10 @@ class MessageService {
     firestore.collection(collection).doc(values['id']).delete();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamList({
-    required String groupNumber,
-  }) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamList(String? groupNumber) {
     return FirebaseFirestore.instance
         .collection(collection)
-        .where('groupNumber', isEqualTo: groupNumber)
+        .where('groupNumber', isEqualTo: groupNumber ?? 'error')
         .orderBy('createdAt', descending: true)
         .snapshots();
   }

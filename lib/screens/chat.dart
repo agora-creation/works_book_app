@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
+import 'package:works_book_app/models/message.dart';
+import 'package:works_book_app/providers/user.dart';
+import 'package:works_book_app/services/message.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
 import 'package:works_book_app/widgets/custom_sub_button.dart';
 import 'package:works_book_app/widgets/custom_text_form_field.dart';
+import 'package:works_book_app/widgets/message_list.dart';
 
 class ChatScreen extends StatefulWidget {
   final GroupModel group;
@@ -18,13 +24,49 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  MessageService messageService = MessageService();
+
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Container(
       color: kBackColor,
       child: Stack(
         children: [
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: messageService.streamList(widget.group.number),
+            builder: (context, snapshot) {
+              List<MessageModel> messages = [];
+              if (snapshot.hasData) {
+                for (DocumentSnapshot<Map<String, dynamic>> doc
+                    in snapshot.data!.docs) {
+                  messages.add(MessageModel.fromSnapshot(doc));
+                }
+              }
+              if (messages.isEmpty) {
+                return const Center(child: Text('メッセージがありません'));
+              }
+              return ListView.builder(
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  bottom: 70,
+                ),
+                reverse: true,
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  MessageModel message = messages[index];
+                  return MessageList(
+                    message: message,
+                    isMe: message.userId == userProvider.user?.id,
+                  );
+                },
+              );
+            },
+          ),
           BottomRightButton(
+            heroTag: 'addMessage',
             iconData: Icons.add_comment,
             onPressed: () => showDialog(
               context: context,
@@ -50,15 +92,20 @@ class AddMessageDialog extends StatefulWidget {
 }
 
 class _AddMessageDialogState extends State<AddMessageDialog> {
+  MessageService messageService = MessageService();
+  TextEditingController contentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomTextFormField(
-            controller: TextEditingController(),
+            controller: contentController,
             textInputType: TextInputType.multiline,
             maxLines: null,
             label: 'メッセージを入力',
@@ -80,6 +127,15 @@ class _AddMessageDialogState extends State<AddMessageDialog> {
                 labelColor: kWhiteColor,
                 backgroundColor: kBaseColor,
                 onPressed: () async {
+                  String id = messageService.id();
+                  messageService.create({
+                    'id': id,
+                    'groupNumber': widget.group.number,
+                    'userId': userProvider.user?.id,
+                    'userName': userProvider.user?.name,
+                    'content': contentController.text,
+                    'createdAt': DateTime.now(),
+                  });
                   Navigator.pop(context);
                 },
               ),

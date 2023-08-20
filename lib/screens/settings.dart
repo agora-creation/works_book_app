@@ -82,11 +82,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 UserPasswordScreen(userProvider: userProvider),
               ),
             ),
-            SettingsListTile(
-              iconData: Icons.notifications,
-              label: '通知設定',
-              onTap: () {},
-            ),
             widget.group != null
                 ? SettingsListTile(
                     iconData: Icons.groups,
