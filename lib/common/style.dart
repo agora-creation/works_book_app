@@ -64,3 +64,6 @@ List<Color> kPlanColors = const [
   Color(0xFF4CAF50),
   Color(0xFFFFC107),
 ];
+
+DateTime kFirstDate = DateTime.now().subtract(const Duration(days: 1095));
+DateTime kLastDate = DateTime.now().add(const Duration(days: 1095));
