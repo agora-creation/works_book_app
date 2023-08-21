@@ -15,7 +15,7 @@ class MonthField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      textColor: kBackColor,
+      tileColor: kBackColor,
       title: Text(
         dateText('yyyy年MM月', month),
         style: const TextStyle(color: kBlackColor),

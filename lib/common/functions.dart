@@ -7,8 +7,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:works_book_app/common/date_machine_util.dart';
 
-void pushScreen(BuildContext context, Widget widget) {
-  Navigator.push(
+void pushScreen(BuildContext context, Widget widget) async {
+  await Navigator.push(
     context,
     MaterialPageRoute(
       builder: (context) => widget,
@@ -16,8 +16,8 @@ void pushScreen(BuildContext context, Widget widget) {
   );
 }
 
-void pushReplacementScreen(BuildContext context, Widget widget) {
-  Navigator.pushReplacement(
+void pushReplacementScreen(BuildContext context, Widget widget) async {
+  await Navigator.pushReplacement(
     context,
     MaterialPageRoute(
       builder: (context) => widget,
@@ -26,8 +26,8 @@ void pushReplacementScreen(BuildContext context, Widget widget) {
   );
 }
 
-void showBottomUpScreen(BuildContext context, Widget widget) {
-  showMaterialModalBottomSheet(
+Future showBottomUpScreen(BuildContext context, Widget widget) async {
+  await showMaterialModalBottomSheet(
     expand: true,
     context: context,
     builder: (context) => widget,

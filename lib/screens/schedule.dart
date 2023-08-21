@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/plan.dart';
+import 'package:works_book_app/screens/schedule_add.dart';
 import 'package:works_book_app/screens/schedule_data_source.dart';
-import 'package:works_book_app/widgets/custom_sub_button.dart';
-import 'package:works_book_app/widgets/custom_text_form_field.dart';
+import 'package:works_book_app/screens/schedule_mod.dart';
 
 class ScheduleScreen extends StatefulWidget {
   final GroupModel group;
@@ -22,33 +23,7 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   List<PlanModel> _getDataSource() {
     List<PlanModel> plans = [];
-    plans.add(PlanModel.fromMap({
-      'id': '1',
-      'groupNumber': widget.group.number,
-      'name': 'テスト',
-      'startedAt': DateTime.now(),
-      'endedAt': DateTime.now().add(const Duration(hours: 2)),
-      'allDay': false,
-      'createdAt': DateTime.now(),
-    }));
-    plans.add(PlanModel.fromMap({
-      'id': '2',
-      'groupNumber': widget.group.number,
-      'name': 'テスト',
-      'startedAt': DateTime.now().add(const Duration(hours: 1)),
-      'endedAt': DateTime.now().add(const Duration(hours: 4)),
-      'allDay': false,
-      'createdAt': DateTime.now(),
-    }));
-    plans.add(PlanModel.fromMap({
-      'id': '3',
-      'groupNumber': widget.group.number,
-      'name': 'テストテストテストテストテスト',
-      'startedAt': DateTime.now().add(const Duration(hours: 6)),
-      'endedAt': DateTime.now().add(const Duration(hours: 9)),
-      'allDay': false,
-      'createdAt': DateTime.now(),
-    }));
+
     return plans;
   }
 
@@ -82,71 +57,25 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               headerDateFormat: 'yyyy年MM月',
               onTap: (CalendarTapDetails details) async {
                 dynamic appointment = details.appointments;
-                DateTime date = details.date!;
-                await showDialog(
-                  context: context,
-                  builder: (context) => const AddScheduleDialog(),
-                );
+                DateTime dateTime = details.date!;
+                if (appointment != null) {
+                  await showBottomUpScreen(
+                    context,
+                    const ScheduleModScreen(),
+                  );
+                } else {
+                  await showBottomUpScreen(
+                    context,
+                    ScheduleAddScreen(
+                      group: widget.group,
+                      dateTime: dateTime,
+                    ),
+                  );
+                }
               },
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class AddScheduleDialog extends StatefulWidget {
-  const AddScheduleDialog({super.key});
-
-  @override
-  State<AddScheduleDialog> createState() => _AddScheduleDialogState();
-}
-
-class _AddScheduleDialogState extends State<AddScheduleDialog> {
-  TextEditingController nameController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomTextFormField(
-            controller: nameController,
-            textInputType: TextInputType.text,
-            maxLines: 1,
-            label: '予定名',
-            color: kBlackColor,
-            prefix: Icons.short_text,
-          ),
-          Text('開始日'),
-          Text('開始時間'),
-          Text('終了日'),
-          Text('終了時間'),
-          Text('終日'),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomSubButton(
-                label: 'やめる',
-                labelColor: kWhiteColor,
-                backgroundColor: kGreyColor,
-                onPressed: () => Navigator.pop(context),
-              ),
-              CustomSubButton(
-                label: '予定を追加する',
-                labelColor: kWhiteColor,
-                backgroundColor: kBaseColor,
-                onPressed: () async {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

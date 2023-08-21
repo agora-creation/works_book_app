@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/plan.dart';
 
 class ScheduleDataSource extends CalendarDataSource {
@@ -25,7 +24,7 @@ class ScheduleDataSource extends CalendarDataSource {
 
   @override
   Color getColor(int index) {
-    return kBaseColor;
+    return appointments![index].color;
   }
 
   @override
