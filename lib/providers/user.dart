@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:works_book_app/models/user.dart';
 import 'package:works_book_app/services/group_login.dart';
@@ -21,6 +22,7 @@ class UserProvider with ChangeNotifier {
   GroupLoginService groupLoginService = GroupLoginService();
   UserModel? _user;
   UserModel? get user => _user;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -69,6 +71,7 @@ class UserProvider with ChangeNotifier {
         password: passwordController.text,
       );
       _authUser = result?.user;
+      String? token = await messaging.getToken();
       userService.create({
         'id': _authUser?.uid,
         'name': nameController.text,
@@ -77,7 +80,7 @@ class UserProvider with ChangeNotifier {
         'groupNumber': '',
         'recordId': '',
         'recordRestId': '',
-        'token': '',
+        'token': token,
         'createdAt': DateTime.now(),
       });
     } catch (e) {
@@ -187,6 +190,11 @@ class UserProvider with ChangeNotifier {
     } else {
       _authUser = authUser;
       _status = AuthStatus.authenticated;
+      String? token = await messaging.getToken();
+      userService.update({
+        'id': _authUser?.uid,
+        'token': token,
+      });
       _user = await userService.select(_authUser?.uid);
     }
     notifyListeners();
