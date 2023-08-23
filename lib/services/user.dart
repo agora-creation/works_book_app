@@ -24,4 +24,18 @@ class UserService {
     });
     return ret;
   }
+
+  Future<List<UserModel>> selectList(String? groupNumber) async {
+    List<UserModel> ret = [];
+    await firestore
+        .collection(collection)
+        .where('groupNumber', isEqualTo: groupNumber ?? 'error')
+        .get()
+        .then((value) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in value.docs) {
+        ret.add(UserModel.fromSnapshot(doc));
+      }
+    });
+    return ret;
+  }
 }

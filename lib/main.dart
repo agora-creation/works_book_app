@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -10,15 +9,12 @@ import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/home.dart';
 import 'package:works_book_app/screens/sign_in.dart';
 import 'package:works_book_app/screens/splash.dart';
-
-Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print("Handling a background message: ${message.messageId}");
-}
+import 'package:works_book_app/services/fm.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await Firebase.initializeApp();
+  await FmServices().initNotifications();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);

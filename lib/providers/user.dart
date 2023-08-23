@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:works_book_app/models/user.dart';
+import 'package:works_book_app/services/fm.dart';
 import 'package:works_book_app/services/group_login.dart';
 import 'package:works_book_app/services/user.dart';
 
@@ -18,11 +18,11 @@ class UserProvider with ChangeNotifier {
   FirebaseAuth? auth;
   User? _authUser;
   User? get authUser => _authUser;
+  FmServices fmServices = FmServices();
   UserService userService = UserService();
   GroupLoginService groupLoginService = GroupLoginService();
   UserModel? _user;
   UserModel? get user => _user;
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -50,6 +50,11 @@ class UserProvider with ChangeNotifier {
         password: passwordController.text,
       );
       _authUser = result?.user;
+      String token = await fmServices.getToken() ?? '';
+      userService.update({
+        'id': _authUser?.uid,
+        'token': token,
+      });
     } catch (e) {
       _status = AuthStatus.unauthenticated;
       notifyListeners();
@@ -71,7 +76,7 @@ class UserProvider with ChangeNotifier {
         password: passwordController.text,
       );
       _authUser = result?.user;
-      String? token = await messaging.getToken();
+      String token = await fmServices.getToken() ?? '';
       userService.create({
         'id': _authUser?.uid,
         'name': nameController.text,
@@ -169,6 +174,16 @@ class UserProvider with ChangeNotifier {
     return Future.delayed(Duration.zero);
   }
 
+  Future delete() async {
+    userService.delete({'id': _authUser?.uid});
+    await auth?.currentUser?.delete();
+    await auth?.signOut();
+    _status = AuthStatus.unauthenticated;
+    _user = null;
+    notifyListeners();
+    return Future.delayed(Duration.zero);
+  }
+
   Future reloadUser() async {
     _user = await userService.select(_authUser?.uid);
     notifyListeners();
@@ -190,11 +205,6 @@ class UserProvider with ChangeNotifier {
     } else {
       _authUser = authUser;
       _status = AuthStatus.authenticated;
-      String? token = await messaging.getToken();
-      userService.update({
-        'id': _authUser?.uid,
-        'token': token,
-      });
       _user = await userService.select(_authUser?.uid);
     }
     notifyListeners();

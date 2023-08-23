@@ -10,7 +10,7 @@ class TitleLogo extends StatelessWidget {
       children: [
         Image.asset(
           'assets/images/logo.png',
-          width: 100,
+          width: 80,
         ),
         const Text(
           'お仕事手帳',

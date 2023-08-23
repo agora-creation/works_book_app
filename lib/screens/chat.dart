@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/message.dart';
+import 'package:works_book_app/models/user.dart';
 import 'package:works_book_app/providers/user.dart';
+import 'package:works_book_app/services/fm.dart';
 import 'package:works_book_app/services/message.dart';
+import 'package:works_book_app/services/user.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
 import 'package:works_book_app/widgets/custom_sub_button.dart';
 import 'package:works_book_app/widgets/custom_text_form_field.dart';
@@ -92,8 +95,21 @@ class AddMessageDialog extends StatefulWidget {
 }
 
 class _AddMessageDialogState extends State<AddMessageDialog> {
+  FmServices fmServices = FmServices();
   MessageService messageService = MessageService();
+  UserService userService = UserService();
   TextEditingController contentController = TextEditingController();
+
+  Future _groupNotification(String body) async {
+    List<UserModel> users = await userService.selectList(widget.group.number);
+    for (UserModel user in users) {
+      fmServices.send(
+        token: user.token,
+        title: '新着メッセージ',
+        body: body,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +152,8 @@ class _AddMessageDialogState extends State<AddMessageDialog> {
                     'content': contentController.text,
                     'createdAt': DateTime.now(),
                   });
+                  await _groupNotification(contentController.text);
+                  if (!mounted) return;
                   Navigator.pop(context);
                 },
               ),

@@ -103,6 +103,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 pushReplacementScreen(context, const SignInScreen());
               },
             ),
+            const SizedBox(height: 16),
+            LinkText(
+              label: 'アカウント削除',
+              labelColor: kRedColor,
+              onTap: () async {
+                await userProvider.delete();
+                userProvider.clearController();
+                if (!mounted) return;
+                pushReplacementScreen(context, const SignInScreen());
+              },
+            ),
           ],
         ),
       ),
