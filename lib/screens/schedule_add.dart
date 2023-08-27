@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
+import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/services/plan.dart';
 import 'package:works_book_app/widgets/custom_main_button.dart';
 import 'package:works_book_app/widgets/custom_text_form_field.dart';
@@ -69,6 +71,8 @@ class _ScheduleAddScreenState extends State<ScheduleAddScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -240,7 +244,10 @@ class _ScheduleAddScreenState extends State<ScheduleAddScreen> {
                     planService.create({
                       'id': id,
                       'groupNumber': widget.group.number,
+                      'userId': userProvider.user?.id,
+                      'userName': userProvider.user?.name,
                       'name': nameController.text,
+                      'details': '',
                       'startedAt': startedAt,
                       'endedAt': endedAt,
                       'color': color,

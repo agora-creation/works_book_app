@@ -230,6 +230,30 @@ class _ScheduleModScreenState extends State<ScheduleModScreen> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 8),
+              const Text(
+                '作成日時',
+                style: TextStyle(
+                  color: kGrey2Color,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                dateText('yyyy/MM/dd HH:mm', widget.plan.createdAt),
+                style: const TextStyle(color: kBlackColor),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                '作成者',
+                style: TextStyle(
+                  color: kGrey2Color,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                widget.plan.userName,
+                style: const TextStyle(color: kBlackColor),
+              ),
               const SizedBox(height: 16),
               Center(
                 child: CustomMainButton(
@@ -241,6 +265,7 @@ class _ScheduleModScreenState extends State<ScheduleModScreen> {
                     planService.update({
                       'id': widget.plan.id,
                       'name': nameController.text,
+                      'details': '',
                       'startedAt': startedAt,
                       'endedAt': endedAt,
                       'color': color,
