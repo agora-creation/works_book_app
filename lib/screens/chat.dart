@@ -68,13 +68,23 @@ class _ChatScreenState extends State<ChatScreen> {
               );
             },
           ),
-          BottomRightButton(
-            heroTag: 'addMessage',
-            iconData: Icons.add_comment,
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => AddMessageDialog(group: widget.group),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // BottomRightButton(
+              //   heroTag: 'addPicture',
+              //   iconData: Icons.add_photo_alternate,
+              //   onPressed: () {},
+              // ),
+              BottomRightButton(
+                heroTag: 'addMessage',
+                iconData: Icons.add_comment,
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (context) => AddMessageDialog(group: widget.group),
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -18,7 +18,7 @@ class BottomRightButton extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(right: 16, bottom: 16),
         child: FloatingActionButton(
           heroTag: heroTag,
           backgroundColor: kBaseColor.withOpacity(0.9),
