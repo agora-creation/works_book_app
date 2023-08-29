@@ -144,11 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   userProvider.user?.groupNumber,
                 ),
                 builder: (context, snapshot) {
-                  List<GroupModel> groupLogins = [];
+                  List<GroupLoginModel> groupLogins = [];
                   if (snapshot.hasData) {
                     for (DocumentSnapshot<Map<String, dynamic>> doc
                         in snapshot.data!.docs) {
-                      groupLogins.add(GroupModel.fromSnapshot(doc));
+                      groupLogins.add(GroupLoginModel.fromSnapshot(doc));
                     }
                   }
                   if (groupLogins.isEmpty) return Container();
