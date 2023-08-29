@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:works_book_app/common/style.dart';
+import 'package:works_book_app/providers/chat.dart';
 import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/home.dart';
 import 'package:works_book_app/screens/sign_in.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: UserProvider.initialize()),
+        ChangeNotifierProvider.value(value: ChatProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
