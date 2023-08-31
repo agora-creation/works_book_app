@@ -106,6 +106,21 @@ class _PlanDetailsDialogState extends State<PlanDetailsDialog> {
         children: [
           Text(widget.plan.details),
           const SizedBox(height: 8),
+          widget.plan.allDay
+              ? Text(
+                  '予定日: ${dateText('yyyy/MM/dd', widget.plan.startedAt)}',
+                  style: const TextStyle(
+                    color: kGreyColor,
+                    fontSize: 14,
+                  ),
+                )
+              : Text(
+                  '予定日:\n${dateText('yyyy/MM/dd HH:mm', widget.plan.startedAt)}～${dateText('yyyy/MM/dd HH:mm', widget.plan.endedAt)}',
+                  style: const TextStyle(
+                    color: kGreyColor,
+                    fontSize: 14,
+                  ),
+                ),
           Text(
             '作成日時: ${dateText('yyyy/MM/dd HH:mm', widget.plan.createdAt)}',
             style: const TextStyle(
