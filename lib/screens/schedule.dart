@@ -57,12 +57,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     dynamic appointment = details.appointments;
                     DateTime dateTime = details.date!;
                     if (appointment != null) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => PlanDetailsDialog(
-                          plan: appointment.first,
-                        ),
-                      );
+                      if (appointment.isNotEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => PlanDetailsDialog(
+                            plan: appointment.first,
+                          ),
+                        );
+                      } else {
+                        pushScreen(
+                          context,
+                          ScheduleAddScreen(
+                            group: widget.group,
+                            dateTime: dateTime,
+                          ),
+                        );
+                      }
                     } else {
                       pushScreen(
                         context,
