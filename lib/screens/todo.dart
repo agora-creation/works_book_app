@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/todo.dart';
+import 'package:works_book_app/screens/todo_add.dart';
+import 'package:works_book_app/screens/todo_mod.dart';
 import 'package:works_book_app/services/todo.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
 import 'package:works_book_app/widgets/custom_sub_button.dart';
-import 'package:works_book_app/widgets/custom_text_form_field.dart';
-import 'package:works_book_app/widgets/link_text.dart';
 import 'package:works_book_app/widgets/todo_list.dart';
 
 class TodoScreen extends StatefulWidget {
@@ -63,7 +64,7 @@ class _TodoScreenState extends State<TodoScreen> {
                     },
                     onTap: () => showDialog(
                       context: context,
-                      builder: (context) => ModTodoDialog(todo: todo),
+                      builder: (context) => TodoDetailsDialog(todo: todo),
                     ),
                   );
                 },
@@ -73,9 +74,9 @@ class _TodoScreenState extends State<TodoScreen> {
           BottomRightButton(
             heroTag: 'addTodo',
             iconData: Icons.add,
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => AddTodoDialog(group: widget.group),
+            onPressed: () => pushScreen(
+              context,
+              TodoAddScreen(group: widget.group),
             ),
           ),
         ],
@@ -84,142 +85,63 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 }
 
-class AddTodoDialog extends StatefulWidget {
-  final GroupModel group;
-
-  const AddTodoDialog({
-    required this.group,
-    super.key,
-  });
-
-  @override
-  State<AddTodoDialog> createState() => _AddTodoDialogState();
-}
-
-class _AddTodoDialogState extends State<AddTodoDialog> {
-  TodoService todoService = TodoService();
-  TextEditingController contentController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomTextFormField(
-            controller: contentController,
-            textInputType: TextInputType.multiline,
-            maxLines: null,
-            label: '追加する内容',
-            color: kBlackColor,
-            prefix: Icons.short_text,
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomSubButton(
-                label: 'やめる',
-                labelColor: kWhiteColor,
-                backgroundColor: kGreyColor,
-                onPressed: () => Navigator.pop(context),
-              ),
-              CustomSubButton(
-                label: 'Todoを追加する',
-                labelColor: kWhiteColor,
-                backgroundColor: kBaseColor,
-                onPressed: () async {
-                  String id = todoService.id();
-                  todoService.create({
-                    'id': id,
-                    'groupNumber': widget.group.number,
-                    'content': contentController.text,
-                    'finished': false,
-                    'createdAt': DateTime.now(),
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ModTodoDialog extends StatefulWidget {
+class TodoDetailsDialog extends StatefulWidget {
   final TodoModel todo;
 
-  const ModTodoDialog({
+  const TodoDetailsDialog({
     required this.todo,
     super.key,
   });
 
   @override
-  State<ModTodoDialog> createState() => _ModTodoDialogState();
+  State<TodoDetailsDialog> createState() => _TodoDetailsDialogState();
 }
 
-class _ModTodoDialogState extends State<ModTodoDialog> {
-  TodoService todoService = TodoService();
-  TextEditingController contentController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    contentController.text = widget.todo.content;
-  }
-
+class _TodoDetailsDialogState extends State<TodoDetailsDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      title: Text(widget.todo.title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextFormField(
-            controller: contentController,
-            textInputType: TextInputType.multiline,
-            maxLines: null,
-            label: '変更する内容',
-            color: kBlackColor,
-            prefix: Icons.short_text,
+          Text(widget.todo.details),
+          const SizedBox(height: 8),
+          Text(
+            '作成日時: ${dateText('yyyy/MM/dd HH:mm', widget.todo.createdAt)}',
+            style: const TextStyle(
+              color: kGreyColor,
+              fontSize: 14,
+            ),
           ),
-          const SizedBox(height: 16),
+          Text(
+            '作成者: ${widget.todo.createdUser}',
+            style: const TextStyle(
+              color: kGreyColor,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomSubButton(
-                label: 'やめる',
+                label: '閉じる',
                 labelColor: kWhiteColor,
                 backgroundColor: kGreyColor,
                 onPressed: () => Navigator.pop(context),
               ),
               CustomSubButton(
-                label: '変更内容を保存',
+                label: '編集',
                 labelColor: kWhiteColor,
                 backgroundColor: kBaseColor,
-                onPressed: () async {
-                  todoService.update({
-                    'id': widget.todo.id,
-                    'content': contentController.text,
-                  });
-                  Navigator.pop(context);
-                },
+                onPressed: () => pushScreen(
+                  context,
+                  TodoModScreen(todo: widget.todo),
+                ),
               ),
             ],
-          ),
-          const SizedBox(height: 8),
-          Center(
-            child: LinkText(
-              label: 'Todoを削除',
-              labelColor: kRedColor,
-              onTap: () async {
-                todoService.delete({'id': widget.todo.id});
-                Navigator.pop(context);
-              },
-            ),
           ),
         ],
       ),

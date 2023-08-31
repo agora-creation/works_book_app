@@ -33,7 +33,7 @@ class TodoList extends StatelessWidget {
               child: GestureDetector(
                 onTap: onTap,
                 child: Text(
-                  todo.content,
+                  todo.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(

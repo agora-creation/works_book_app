@@ -7,17 +7,18 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:works_book_app/common/date_machine_util.dart';
 
-void pushScreen(BuildContext context, Widget widget) async {
-  await Navigator.push(
+void pushScreen(BuildContext context, Widget widget) {
+  Navigator.push(
     context,
     MaterialPageRoute(
       builder: (context) => widget,
+      fullscreenDialog: true,
     ),
   );
 }
 
-void pushReplacementScreen(BuildContext context, Widget widget) async {
-  await Navigator.pushReplacement(
+void pushReplacementScreen(BuildContext context, Widget widget) {
+  Navigator.pushReplacement(
     context,
     MaterialPageRoute(
       builder: (context) => widget,
