@@ -10,7 +10,6 @@ import 'package:works_book_app/models/group_login.dart';
 import 'package:works_book_app/providers/user.dart';
 import 'package:works_book_app/screens/chat.dart';
 import 'package:works_book_app/screens/group_in.dart';
-import 'package:works_book_app/screens/group_request.dart';
 import 'package:works_book_app/screens/memo.dart';
 import 'package:works_book_app/screens/record.dart';
 import 'package:works_book_app/screens/schedule.dart';
@@ -139,31 +138,6 @@ class _HomeScreenState extends State<HomeScreen> {
             automaticallyImplyLeading: false,
             title: titleWidget,
             actions: [
-              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: groupLoginService.streamListRequest(
-                  userProvider.user?.groupNumber,
-                ),
-                builder: (context, snapshot) {
-                  List<GroupLoginModel> groupLogins = [];
-                  if (snapshot.hasData) {
-                    for (DocumentSnapshot<Map<String, dynamic>> doc
-                        in snapshot.data!.docs) {
-                      groupLogins.add(GroupLoginModel.fromSnapshot(doc));
-                    }
-                  }
-                  if (groupLogins.isEmpty) return Container();
-                  return IconButton(
-                    onPressed: () => showBottomUpScreen(
-                      context,
-                      GroupRequestScreen(group: group),
-                    ),
-                    icon: const Icon(
-                      Icons.save_alt,
-                      color: kRedColor,
-                    ),
-                  );
-                },
-              ),
               IconButton(
                 onPressed: () => showBottomUpScreen(
                   context,

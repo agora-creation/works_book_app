@@ -22,15 +22,4 @@ class GroupLoginService {
         .where('id', isEqualTo: id ?? 'error')
         .snapshots();
   }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamListRequest(
-    String? groupNumber,
-  ) {
-    return FirebaseFirestore.instance
-        .collection(collection)
-        .where('groupNumber', isEqualTo: groupNumber ?? 'error')
-        .where('accept', isEqualTo: false)
-        .orderBy('createdAt', descending: true)
-        .snapshots();
-  }
 }
