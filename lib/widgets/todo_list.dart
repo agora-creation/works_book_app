@@ -32,14 +32,30 @@ class TodoList extends StatelessWidget {
             Expanded(
               child: GestureDetector(
                 onTap: onTap,
-                child: Text(
-                  todo.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: kBlackColor,
-                    fontSize: 16,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      todo.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: kBlackColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                    todo.details != ''
+                        ? Text(
+                            todo.details,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: kGreyColor,
+                              fontSize: 12,
+                            ),
+                          )
+                        : Container(),
+                  ],
                 ),
               ),
             ),

@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/message.dart';
 import 'package:works_book_app/providers/chat.dart';
 import 'package:works_book_app/providers/user.dart';
+import 'package:works_book_app/screens/chat_image.dart';
 import 'package:works_book_app/services/message.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
 import 'package:works_book_app/widgets/custom_sub_button.dart';
@@ -65,7 +67,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   return MessageList(
                     message: message,
                     isMe: message.userId == userProvider.user?.id,
-                    onTapImage: () {},
+                    onTapImage: () => showBottomUpScreen(
+                      context,
+                      ChatImageScreen(imageUrl: message.imageUrl),
+                    ),
                   );
                 },
               );

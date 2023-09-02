@@ -7,11 +7,14 @@ import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/plan.dart';
 import 'package:works_book_app/providers/user.dart';
-import 'package:works_book_app/screens/schedule_add.dart';
 import 'package:works_book_app/services/plan.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
+import 'package:works_book_app/widgets/custom_main_button.dart';
 import 'package:works_book_app/widgets/custom_schedule_view.dart';
+import 'package:works_book_app/widgets/custom_text_form_field.dart';
+import 'package:works_book_app/widgets/date_field.dart';
 import 'package:works_book_app/widgets/link_text.dart';
+import 'package:works_book_app/widgets/time_field.dart';
 
 class ScheduleScreen extends StatefulWidget {
   final GroupModel group;
@@ -86,9 +89,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           BottomRightButton(
             heroTag: 'addPlan',
             iconData: Icons.add,
-            onPressed: () => showBottomUpScreen(
-              context,
-              ScheduleAddScreen(
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => PlanAddDialog(
                 group: widget.group,
                 dateTime: DateTime.now(),
               ),
@@ -165,6 +168,7 @@ class _PlanAddDialogState extends State<PlanAddDialog> {
     final userProvider = Provider.of<UserProvider>(context);
 
     return AlertDialog(
+      insetPadding: EdgeInsets.zero,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,11 +326,25 @@ class _PlanAddDialogState extends State<PlanAddDialog> {
           ),
           const SizedBox(height: 16),
           Center(
-            child: LinkText(
-              label: 'この予定を削除',
-              labelColor: kRedColor,
-              onTap: () async {
-                planService.delete({'id': widget.plan.id});
+            child: CustomMainButton(
+              label: '追加する',
+              labelColor: kWhiteColor,
+              backgroundColor: kBaseColor,
+              onPressed: () async {
+                if (titleController.text == '') return;
+                String id = planService.id();
+                planService.create({
+                  'id': id,
+                  'groupNumber': widget.group.number,
+                  'title': titleController.text,
+                  'details': detailsController.text,
+                  'startedAt': startedAt,
+                  'endedAt': endedAt,
+                  'color': color,
+                  'allDay': allDay,
+                  'createdUser': userProvider.user?.name,
+                  'createdAt': DateTime.now(),
+                });
                 Navigator.pop(context);
               },
             ),
