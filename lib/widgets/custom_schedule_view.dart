@@ -19,6 +19,9 @@ class CustomScheduleView extends StatelessWidget {
       showTodayButton: true,
       scheduleViewMonthHeaderBuilder: scheduleViewBuilder,
       view: CalendarView.schedule,
+      scheduleViewSettings: const ScheduleViewSettings(
+        hideEmptyScheduleWeek: true,
+      ),
       dataSource: _DataSource(plans),
       headerDateFormat: 'yyyy年MM月',
       onTap: onTap,
