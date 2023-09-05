@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:works_book_app/common/style.dart';
@@ -224,19 +223,19 @@ class _ChatImageDialogState extends State<ChatImageDialog> {
                 ),
               ),
             ),
-            Material(
-              color: Colors.transparent,
-              child: IconButton(
-                onPressed: () async {
-                  await ImageDownloader.downloadImage(widget.imageUrl);
-                },
-                icon: const Icon(
-                  Icons.download,
-                  color: kWhiteColor,
-                  size: 30,
-                ),
-              ),
-            ),
+            // Material(
+            //   color: Colors.transparent,
+            //   child: IconButton(
+            //     onPressed: () async {
+            //       await ImageDownloader.downloadImage(widget.imageUrl);
+            //     },
+            //     icon: const Icon(
+            //       Icons.download,
+            //       color: kWhiteColor,
+            //       size: 30,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ],
