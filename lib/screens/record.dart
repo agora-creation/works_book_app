@@ -173,10 +173,16 @@ class _AddRecordDialogState extends State<AddRecordDialog> {
     final userProvider = Provider.of<UserProvider>(context);
     bool isRecord = false;
     bool isRecordRest = false;
+    Color statusColor = kGrey2Color;
+    String statusMessage = 'あなたは未出勤です';
     if (userProvider.user?.recordId != '') {
       isRecord = true;
+      statusColor = kBlueColor;
+      statusMessage = 'あなたは出勤中です';
       if (userProvider.user?.recordRestId != '') {
         isRecordRest = true;
+        statusColor = kOrangeColor;
+        statusMessage = 'あなたは休憩中です';
       }
     }
     return AlertDialog(
@@ -186,18 +192,28 @@ class _AddRecordDialogState extends State<AddRecordDialog> {
         children: [
           Text(
             date,
-            style: const TextStyle(color: kGrey2Color),
+            style: const TextStyle(
+              color: kGrey2Color,
+              fontSize: 16,
+            ),
           ),
           Text(
             time,
-            style: const TextStyle(
-              color: kBaseColor,
+            style: TextStyle(
+              color: statusColor,
               fontSize: 32,
               fontWeight: FontWeight.bold,
               letterSpacing: 5,
             ),
           ),
-          const SizedBox(height: 16),
+          Text(
+            statusMessage,
+            style: TextStyle(
+              color: statusColor,
+              fontSize: 18,
+            ),
+          ),
+          const SizedBox(height: 24),
           !isRecord && !isRecordRest
               ? CustomMainButton(
                   label: '出勤する',
@@ -216,8 +232,6 @@ class _AddRecordDialogState extends State<AddRecordDialog> {
                     });
                     userProvider.updateRecordId(id);
                     await userProvider.reloadUser();
-                    if (!mounted) return;
-                    Navigator.pop(context);
                   },
                 )
               : Container(),
@@ -235,8 +249,6 @@ class _AddRecordDialogState extends State<AddRecordDialog> {
                         });
                         userProvider.updateRecordId('');
                         await userProvider.reloadUser();
-                        if (!mounted) return;
-                        Navigator.pop(context);
                       },
                     ),
                     CustomMainButton(
@@ -264,8 +276,6 @@ class _AddRecordDialogState extends State<AddRecordDialog> {
                         });
                         userProvider.updateRecordRestId(id);
                         await userProvider.reloadUser();
-                        if (!mounted) return;
-                        Navigator.pop(context);
                       },
                     ),
                   ],
@@ -294,8 +304,6 @@ class _AddRecordDialogState extends State<AddRecordDialog> {
                     });
                     userProvider.updateRecordRestId('');
                     await userProvider.reloadUser();
-                    if (!mounted) return;
-                    Navigator.pop(context);
                   },
                 )
               : Container(),

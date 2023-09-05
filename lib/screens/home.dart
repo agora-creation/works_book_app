@@ -68,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Widget? titleWidget;
         Widget? bodyWidget;
         if (group != null) {
-          titleWidget = Text(group.name);
+          titleWidget = Text(
+            '${userProvider.user?.name ?? ''} (${group.name})',
+          );
           bodyWidget = CustomPersistentTabView(
             context: context,
             controller: controller,
@@ -113,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         } else {
+          titleWidget = Text(userProvider.user?.name ?? '');
           if (groupLogin == null) {
             bodyWidget = HomeWidget1(
               onPressed: () => showBottomUpScreen(

@@ -11,9 +11,9 @@ import 'package:works_book_app/services/plan.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
 import 'package:works_book_app/widgets/custom_main_button.dart';
 import 'package:works_book_app/widgets/custom_schedule_view.dart';
+import 'package:works_book_app/widgets/custom_sub_button.dart';
 import 'package:works_book_app/widgets/custom_text_form_field.dart';
 import 'package:works_book_app/widgets/date_field.dart';
-import 'package:works_book_app/widgets/link_text.dart';
 import 'package:works_book_app/widgets/time_field.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -412,10 +412,11 @@ class _PlanDetailsDialogState extends State<PlanDetailsDialog> {
                 ),
           const SizedBox(height: 16),
           Center(
-            child: LinkText(
+            child: CustomSubButton(
               label: 'この予定を削除',
               labelColor: kRedColor,
-              onTap: () async {
+              backgroundColor: kWhiteColor,
+              onPressed: () async {
                 planService.delete({'id': widget.plan.id});
                 Navigator.pop(context);
               },

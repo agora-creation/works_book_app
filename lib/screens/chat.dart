@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:works_book_app/common/functions.dart';
 import 'package:works_book_app/common/style.dart';
 import 'package:works_book_app/models/group.dart';
 import 'package:works_book_app/models/message.dart';
 import 'package:works_book_app/providers/chat.dart';
 import 'package:works_book_app/providers/user.dart';
-import 'package:works_book_app/screens/chat_image.dart';
 import 'package:works_book_app/services/message.dart';
 import 'package:works_book_app/widgets/bottom_right_button.dart';
 import 'package:works_book_app/widgets/custom_sub_button.dart';
@@ -67,9 +66,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   return MessageList(
                     message: message,
                     isMe: message.userId == userProvider.user?.id,
-                    onTapImage: () => showBottomUpScreen(
-                      context,
-                      ChatImageScreen(imageUrl: message.imageUrl),
+                    onTapImage: () => showDialog(
+                      barrierDismissible: true,
+                      barrierLabel: '閉じる',
+                      context: context,
+                      builder: (context) => ChatImageDialog(
+                        imageUrl: message.imageUrl,
+                      ),
                     ),
                   );
                 },
@@ -173,6 +176,70 @@ class _AddMessageDialogState extends State<AddMessageDialog> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ChatImageDialog extends StatefulWidget {
+  final String imageUrl;
+
+  const ChatImageDialog({
+    required this.imageUrl,
+    super.key,
+  });
+
+  @override
+  State<ChatImageDialog> createState() => _ChatImageDialogState();
+}
+
+class _ChatImageDialogState extends State<ChatImageDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: InteractiveViewer(
+                minScale: 0.1,
+                maxScale: 5,
+                child: Image.network(widget.imageUrl),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Material(
+              color: Colors.transparent,
+              child: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(
+                  Icons.close,
+                  color: kWhiteColor,
+                  size: 30,
+                ),
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: IconButton(
+                onPressed: () async {
+                  await ImageDownloader.downloadImage(widget.imageUrl);
+                },
+                icon: const Icon(
+                  Icons.download,
+                  color: kWhiteColor,
+                  size: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
